@@ -177,12 +177,9 @@ def get_inp_centered_cursur_position(input_label, right_justification=75, line_s
     if line_spacing:
         print()
     # here right_justification is the half the value of our centering value
-    # ascii escape sequence for moving the cursor to the right
-    # \033 s - Save cursor position
-    # \033 u - Restore cursor position
     if move_cursor_next_line:
-        print(f"{input_label.rjust(right_justification + (lbl_len //2 ) )}\033 s\033 u")
-    return  input(f"{''.rjust(right_justification - (lbl_len //4 ) )}\033 s\033 u") if move_cursor_next_line else input(f"{input_label.rjust(right_justification + (lbl_len //2 ) )}\033 s\033 u")
+        print(f"{input_label.rjust(right_justification + (lbl_len //2 ) )}")
+    return  input(f"{''.rjust(right_justification - (lbl_len //4 ) )}") if move_cursor_next_line else input(f"{input_label.rjust(right_justification + (lbl_len //2 ) )}")
 
 def print_centered_text(text, line_width=150, line_spacing=False, underline=False):
     """
