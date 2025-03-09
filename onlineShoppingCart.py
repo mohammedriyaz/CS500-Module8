@@ -42,7 +42,7 @@ class ShoppingCart:
             exisitng_item.item_quantity += int(get_inp_centered_cursur_position("Enter the item quantity you want add:", line_spacing=True))
         else:
             if for_update_item:
-                item_quantity = int(get_inp_centered_cursur_position("Enter the item quantity: ", line_spacing=True, move_cursor_next_line=True))
+                item_quantity = int(get_inp_centered_cursur_position("Enter the new quantity: ", line_spacing=True, move_cursor_next_line=True))
                 self.modify_item(ItemToPurchase(item_name=item_name, item_quantity=item_quantity))
             else:
                 item_desc = get_inp_centered_cursur_position("Enter the item description: ", line_spacing=True, move_cursor_next_line=True)
@@ -53,6 +53,23 @@ class ShoppingCart:
         
     def fetch_item_by_name(self, item_name, return_position=False):
         position = self.duplicate_item_tracker[item_name] if item_name in self.duplicate_item_tracker else -1
+        if position > -1:
+            '''
+            If the item is found in the cart, then check if the item is in the correct position
+            If not, then update the position
+            '''
+            update_position = False
+            if position < len(self.cart_items):
+                item_in_position = self.cart_items[position]
+                if item_in_position.item_name != item_name:
+                    update_position = True
+            else :
+                update_position = True
+            if update_position:
+                for index, item in enumerate(self.cart_items):
+                    if item.item_name == item_name:
+                        position = index
+                        break
         if return_position:
             return position
         if position > -1:
